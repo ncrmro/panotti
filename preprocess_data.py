@@ -129,15 +129,19 @@ def preprocess_dataset(inpath="Samples/", outpath="Preproc/", train_percentage=0
     else:
         train_outpath = outpath+"Train/"
         test_outpath = outpath+"Test/"
+    ###
+    # modified by ncrmro, docker-compose volume means this dir already exists, check for train
     if not os.path.exists(outpath):
-        os.mkdir( outpath );   # make a new directory for preproc'd files
-        if not nosplit:
-            os.mkdir( train_outpath );
-            os.mkdir( test_outpath );
+        os.mkdir( outpath )   # make a new directory for preproc'd files
+    if not nosplit:
+        if not os.path.exists(train_outpath):
+            os.mkdir( train_outpath )
+        if not os.path.exists(test_outpath):
+            os.mkdir( test_outpath )
     else:
         train_outpath = outpath
         test_outpath = outpath
-
+    ###
     parallel = True     # set to false for debugging. when parallel jobs crash, usually no error messages are given, the system just hangs
     if (parallel):
         cpu_count = os.cpu_count()
@@ -156,9 +160,9 @@ def preprocess_dataset(inpath="Samples/", outpath="Preproc/", train_percentage=0
             # make new Preproc/ subdirectories for class
             if not os.path.exists(train_outpath+classname):
                 print("Making directory ",train_outpath+classname)
-                os.mkdir( train_outpath+classname );
-                if not nosplit:
-                    os.mkdir( test_outpath+classname );
+                os.mkdir( train_outpath+classname )
+            if not nosplit and not os.path.exists(test_outpath+classname):
+                os.mkdir(test_outpath + classname)
             dirname = inpath+subdir+classname
             class_files = list(listdir_nohidden(dirname))   # all filenames for this class, skip hidden files
             class_files.sort()
