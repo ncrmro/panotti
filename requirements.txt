@@ -7,9 +7,15 @@ audioread>=2.1.4
 tensorflow>=1.5.0
 h5py>=2.7.0
 scipy>=1.0.0
-librosa>=0.5.1
+# librosa>=0.5.1
 Pillow>=5.0.0
 pypandoc>=1.4
 scikit_learn>=0.19.1
 winshell>=0.6
+scikit-image>=0.14.2
+
+# ncrmro
+numba==0.43.0
+llvmlite==0.32.1
+librosa==0.6.3
 scikit-image>=0.14.2
